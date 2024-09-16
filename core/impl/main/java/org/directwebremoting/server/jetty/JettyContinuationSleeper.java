@@ -2,14 +2,13 @@ package org.directwebremoting.server.jetty;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.directwebremoting.extend.RealScriptSession;
 import org.directwebremoting.extend.ScriptConduit;
 import org.directwebremoting.impl.BaseSleeper;
-import org.eclipse.jetty.continuation.Continuation;
-import org.eclipse.jetty.continuation.ContinuationSupport;
+
+import jakarta.servlet.AsyncContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * A Sleeper that works with Jetty Continuations
@@ -26,7 +25,7 @@ public class JettyContinuationSleeper extends BaseSleeper
      * @param response
      * @throws IOException
      */
-    public JettyContinuationSleeper(HttpServletRequest request, HttpServletResponse response, RealScriptSession scriptSession, ScriptConduit conduit) throws IOException
+    public JettyContinuationSleeper(final HttpServletRequest request, final HttpServletResponse response, RealScriptSession scriptSession, ScriptConduit conduit) throws IOException
     {
         super(response, scriptSession, conduit);
 
@@ -41,15 +40,30 @@ public class JettyContinuationSleeper extends BaseSleeper
     @Override
     protected void enterSleep()
     {
-        continuation = ContinuationSupport.getContinuation(request);
-        continuation.setAttribute(ATTRIBUTE_SLEEPER, this);
-        continuation.setTimeout(0);
-        continuation.suspend();
+        asyncContext = request.startAsync();
+        request.setAttribute(ATTRIBUTE_SLEEPER, this);
+        asyncContext.setTimeout(0);
+//        asyncContext.addListener(new AsyncListener() {
+//
+//            @Override
+//            public void onComplete(final AsyncEvent event) throws IOException {}
+//
+//            @Override
+//            public void onError(final AsyncEvent event) throws IOException {
+//                event.getThrowable();
+//            }
+//
+//            @Override
+//            public void onStartAsync(final AsyncEvent event) throws IOException {}
+//
+//            @Override
+//            public void onTimeout(final AsyncEvent event) throws IOException {}
+//        });
 
         synchronized (workLock)
         {
             if (queuedWork) {
-                continuation.resume(); // will eventually trigger resumeWork() from a container thread
+                asyncContext.dispatch(); // will eventually trigger resumeWork() from a container thread
             } else {
                 workInProgress = false; // open up for doing new work
             }
@@ -68,7 +82,7 @@ public class JettyContinuationSleeper extends BaseSleeper
             if (workInProgress) {
                 queuedWork = true;
             } else {
-                continuation.resume(); // will eventually trigger resumeWork() from a container thread
+                asyncContext.dispatch(); // will eventually trigger resumeWork() from a container thread
                 workInProgress = true;
             }
         }
@@ -81,7 +95,7 @@ public class JettyContinuationSleeper extends BaseSleeper
     {
         while(true) {
             doWork();
-            if (continuation.getAttribute(ATTRIBUTE_SLEEPER) == null) {
+            if (request.getAttribute(ATTRIBUTE_SLEEPER) == null) {
                 // If we have disconnected the Sleeper from the container then it is time to end the async cycle
                 return;
             }
@@ -92,7 +106,7 @@ public class JettyContinuationSleeper extends BaseSleeper
                     queuedWork = false;
                 } else {
                     // No work in the queue so exit loop and go to sleep again
-                    continuation.suspend();
+                    asyncContext.dispatch();
                     workInProgress = false;
                     return;
                 }
@@ -106,8 +120,8 @@ public class JettyContinuationSleeper extends BaseSleeper
     @Override
     protected void close()
     {
-        if (continuation != null) {
-            continuation.removeAttribute(ATTRIBUTE_SLEEPER);
+        if (asyncContext != null) {
+            request.removeAttribute(ATTRIBUTE_SLEEPER);
         }
     }
 
@@ -123,7 +137,7 @@ public class JettyContinuationSleeper extends BaseSleeper
     private final HttpServletRequest request;
 
     // Internal state
-    private Continuation continuation = null;
+    private AsyncContext asyncContext = null;
     private final Object workLock = new Object();
     private boolean workInProgress = false;
     private boolean queuedWork = false;

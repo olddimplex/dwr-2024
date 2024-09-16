@@ -2,9 +2,9 @@ package org.directwebremoting.server.jetty;
 
 import java.io.IOException;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.directwebremoting.extend.ContainerAbstraction;
 import org.directwebremoting.extend.RealScriptSession;
@@ -21,7 +21,7 @@ import org.directwebremoting.util.LocalUtil;
 public class JettyContinuationContainerAbstraction implements ContainerAbstraction
 {
     /* (non-Javadoc)
-     * @see org.directwebremoting.dwrp.ContainerAbstraction#isNativeEnvironment(javax.servlet.ServletConfig)
+     * @see org.directwebremoting.dwrp.ContainerAbstraction#isNativeEnvironment(jakarta.servlet.ServletConfig)
      */
     public boolean isNativeEnvironment(ServletConfig servletConfig)
     {
@@ -42,7 +42,7 @@ public class JettyContinuationContainerAbstraction implements ContainerAbstracti
     }
 
     /* (non-Javadoc)
-     * @see org.directwebremoting.extend.ContainerAbstraction#handleResumedRequest(javax.servlet.http.HttpServletRequest)
+     * @see org.directwebremoting.extend.ContainerAbstraction#handleResumedRequest(jakarta.servlet.http.HttpServletRequest)
      */
     public boolean handleResumedRequest(HttpServletRequest request)
     {
@@ -56,7 +56,7 @@ public class JettyContinuationContainerAbstraction implements ContainerAbstracti
     }
 
     /* (non-Javadoc)
-     * @see org.directwebremoting.extend.ContainerAbstraction#createSleeper(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.directwebremoting.extend.RealScriptSession, org.directwebremoting.extend.ScriptConduit)
+     * @see org.directwebremoting.extend.ContainerAbstraction#createSleeper(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, org.directwebremoting.extend.RealScriptSession, org.directwebremoting.extend.ScriptConduit)
      */
     public Sleeper createSleeper(HttpServletRequest request, HttpServletResponse response, RealScriptSession scriptSession, ScriptConduit conduit) throws IOException
     {

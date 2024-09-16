@@ -3,10 +3,10 @@
     xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
     xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
     xsi:schemaLocation="
-               http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-               http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-2.0.xsd"
-               default-lazy-init="false"
-               >
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.directwebremoting.org/schema/spring-dwr ../../../../serverside/spring/main/java/org/directwebremoting/spring/spring-dwr-2.0.xsd"
+        default-lazy-init="false"
+        >
 
     <!--  AJAX Facades -->
     <dwr:configuration>

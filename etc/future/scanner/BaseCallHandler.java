@@ -6,8 +6,8 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,7 +50,7 @@ import org.directwebremoting.util.DebuggingPrintWriter;
 public abstract class BaseCallHandler extends BaseDwrpHandler
 {
     /* (non-Javadoc)
-     * @see org.directwebremoting.Handler#handle(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.directwebremoting.Handler#handle(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     public void handle(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
@@ -245,7 +245,7 @@ public abstract class BaseCallHandler extends BaseDwrpHandler
     }
 
     /* (non-Javadoc)
-     * @see org.directwebremoting.Marshaller#marshallOutbound(org.directwebremoting.Replies, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see org.directwebremoting.Marshaller#marshallOutbound(org.directwebremoting.Replies, jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse)
      */
     public void marshallOutbound(Replies replies, HttpServletResponse response) throws IOException
     {
@@ -348,7 +348,7 @@ public abstract class BaseCallHandler extends BaseDwrpHandler
     }
 
     /* (non-Javadoc)
-     * @see org.directwebremoting.extend.Marshaller#marshallException(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, java.lang.Exception)
+     * @see org.directwebremoting.extend.Marshaller#marshallException(jakarta.servlet.http.HttpServletRequest, jakarta.servlet.http.HttpServletResponse, java.lang.Exception)
      */
     public void marshallException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws IOException
     {

@@ -3,11 +3,6 @@ package org.directwebremoting.convert;
 import java.io.IOException;
 import java.io.StringReader;
 
-import nu.xom.Builder;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Node;
-
 import org.directwebremoting.ConversionException;
 import org.directwebremoting.extend.AbstractConverter;
 import org.directwebremoting.extend.EnginePrivate;
@@ -20,6 +15,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import nu.xom.Builder;
+import nu.xom.Document;
+import nu.xom.Element;
+import nu.xom.Node;
 
 /**
  * An implementation of Converter for DOM objects.

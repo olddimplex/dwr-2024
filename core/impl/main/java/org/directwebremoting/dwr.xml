@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dwr PUBLIC
     "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN"
-    "http://getahead.org/dwr/dwr30.dtd">
+    "dwr30.dtd">
 
 <dwr>
 
@@ -125,11 +125,11 @@
     <convert converter="xom" match="nu.xom.Element"/>
     <convert converter="xom" match="nu.xom.Node"/>
 
-    <convert converter="servlet" match="javax.servlet.ServletConfig"/>
-    <convert converter="servlet" match="javax.servlet.ServletContext"/>
-    <convert converter="servlet" match="javax.servlet.http.HttpServletRequest"/>
-    <convert converter="servlet" match="javax.servlet.http.HttpServletResponse"/>
-    <convert converter="servlet" match="javax.servlet.http.HttpSession"/>
+    <convert converter="servlet" match="jakarta.servlet.ServletConfig"/>
+    <convert converter="servlet" match="jakarta.servlet.ServletContext"/>
+    <convert converter="servlet" match="jakarta.servlet.http.HttpServletRequest"/>
+    <convert converter="servlet" match="jakarta.servlet.http.HttpServletResponse"/>
+    <convert converter="servlet" match="jakarta.servlet.http.HttpSession"/>
 
     <convert converter="file" match="java.io.InputStream"/>
     <convert converter="file" match="java.awt.image.BufferedImage"/>

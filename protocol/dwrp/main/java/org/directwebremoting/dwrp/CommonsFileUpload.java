@@ -6,19 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload2.core.DiskFileItemFactory;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.core.FileUploadException;
+import org.apache.commons.fileupload2.core.FileUploadSizeException;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 import org.directwebremoting.event.SessionProgressListener;
 import org.directwebremoting.extend.FormField;
 import org.directwebremoting.extend.ServerException;
 import org.directwebremoting.extend.SimpleInputStreamFactory;
 import org.directwebremoting.io.InputStreamFactory;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 
 /**
@@ -30,22 +30,26 @@ import org.directwebremoting.io.InputStreamFactory;
 public class CommonsFileUpload implements FileUpload
 {
     /* (non-Javadoc)
-     * @see org.directwebremoting.dwrp.FileUpload#isMultipartContent(javax.servlet.http.HttpServletRequest)
+     * @see org.directwebremoting.dwrp.FileUpload#isMultipartContent(jakarta.servlet.http.HttpServletRequest)
      */
     public boolean isMultipartContent(HttpServletRequest req)
     {
-        return ServletFileUpload.isMultipartContent(req);
+        return JakartaServletFileUpload.isMultipartContent(req);
     }
 
     /* (non-Javadoc)
-     * @see org.directwebremoting.dwrp.FileUpload#parseRequest(javax.servlet.http.HttpServletRequest)
+     * @see org.directwebremoting.dwrp.FileUpload#parseRequest(jakarta.servlet.http.HttpServletRequest)
      */
     @SuppressWarnings("unchecked")
     public Map<String, FormField> parseRequest(HttpServletRequest req) throws ServerException
     {
         File location = new File(System.getProperty("java.io.tmpdir"));
-        DiskFileItemFactory itemFactory = new DiskFileItemFactory(DEFAULT_SIZE_THRESHOLD, location);
-        ServletFileUpload fileUploader = new ServletFileUpload(itemFactory);
+        DiskFileItemFactory itemFactory = DiskFileItemFactory.builder()
+           .setBufferSize(DEFAULT_SIZE_THRESHOLD)
+           .setPath(location.toPath())
+           .get();
+                // new DiskFileItemFactory(DEFAULT_SIZE_THRESHOLD, location);
+        JakartaServletFileUpload fileUploader = new JakartaServletFileUpload(itemFactory);
         if (getFileUploadMaxBytes() > 0)
         {
           fileUploader.setFileSizeMax(getFileUploadMaxBytes());
@@ -77,15 +81,15 @@ public class CommonsFileUpload implements FileUpload
             }
             return map;
         }
-        catch (FileSizeLimitExceededException fsle)
+        catch (FileUploadSizeException fsle)
         {
-            throw new ServerException("One or more files is larger (" + fsle.getActualSize() + " bytes) than the configured limit (" + fsle.getPermittedSize() + " bytes).");
+            throw new ServerException("One or more files is larger (" + fsle.getActualSize() + " bytes) than the configured limit (" + fsle.getPermitted() + " bytes).");
         }
-        catch (IOException ex)
+        catch (FileUploadException ex)
         {
             throw new ServerException("Upload failed: " + ex.getMessage(), ex);
         }
-        catch (FileUploadException ex)
+        catch (IOException ex)
         {
             throw new ServerException("Upload failed: " + ex.getMessage(), ex);
         }

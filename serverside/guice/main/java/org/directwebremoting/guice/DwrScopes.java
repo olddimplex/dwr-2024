@@ -1,15 +1,15 @@
 package org.directwebremoting.guice;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.directwebremoting.ScriptSession;
 import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.guice.util.AbstractSimpleContextScope;
 import org.directwebremoting.guice.util.ContextScope;
 
 import static org.directwebremoting.guice.DwrGuiceUtil.*;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Scopes available to DWR applications.

@@ -1,9 +1,9 @@
 package org.directwebremoting.ui.browser;
 
-import javax.servlet.http.Cookie;
-
 import org.directwebremoting.ScriptSessions;
 import org.directwebremoting.util.JavascriptUtil;
+
+import jakarta.servlet.http.Cookie;
 
 /**
  * A copy of some of the functions from the Document DOM object on the server

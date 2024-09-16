@@ -3,8 +3,6 @@ package org.directwebremoting.impl;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.directwebremoting.ConversionException;
@@ -16,6 +14,8 @@ import org.directwebremoting.extend.ScriptBufferUtil;
 import org.directwebremoting.extend.ScriptConduit;
 import org.directwebremoting.extend.Sleeper;
 import org.directwebremoting.util.LocalUtil;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Common functionality for stock Sleepers.

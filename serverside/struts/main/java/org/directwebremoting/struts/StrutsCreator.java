@@ -2,9 +2,6 @@ package org.directwebremoting.struts;
 
 import java.lang.reflect.Method;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.util.RequestUtils;
@@ -15,6 +12,9 @@ import org.directwebremoting.extend.Creator;
 import org.directwebremoting.util.FakeHttpServletRequestFactory;
 import org.directwebremoting.util.LocalUtil;
 import org.directwebremoting.util.Loggers;
+
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * StrutsCreator

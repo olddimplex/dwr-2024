@@ -2,17 +2,19 @@ package org.directwebremoting.util;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Locale;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 
 /**
  * Used by ExecutionContext to forward results back via javascript.
@@ -38,60 +40,68 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addCookie(javax.servlet.http.Cookie)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addCookie(jakarta.servlet.http.Cookie)
      */
+    @Override
     public void addCookie(Cookie cookie)
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addDateHeader(java.lang.String, long)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addDateHeader(java.lang.String, long)
      */
+    @Override
     public void addDateHeader(String name, long value)
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addHeader(java.lang.String, java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addHeader(java.lang.String, java.lang.String)
      */
+    @Override
     public void addHeader(String name, String value)
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#addIntHeader(java.lang.String, int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#addIntHeader(java.lang.String, int)
      */
+    @Override
     public void addIntHeader(String name, int value)
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#containsHeader(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#containsHeader(java.lang.String)
      */
+    @Override
     public boolean containsHeader(String name)
     {
         return false;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#flushBuffer()
+     * @see jakarta.servlet.ServletResponseWrapper#flushBuffer()
      */
+    @Override
     public void flushBuffer() throws IOException
     {
         pout.flush();
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getBufferSize()
+     * @see jakarta.servlet.ServletResponseWrapper#getBufferSize()
      */
+    @Override
     public int getBufferSize()
     {
         return bufferSize;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getCharacterEncoding()
+     * @see jakarta.servlet.ServletResponseWrapper#getCharacterEncoding()
      */
+    @Override
     public String getCharacterEncoding()
     {
         return characterEncoding;
@@ -99,8 +109,9 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
 
     /**
      * @return The MIME type of the content
-     * @see javax.servlet.ServletResponse#setContentType(String)
+     * @see jakarta.servlet.ServletResponse#setContentType(String)
      */
+    @Override
     public String getContentType()
     {
         return contentType;
@@ -117,16 +128,18 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getLocale()
+     * @see jakarta.servlet.ServletResponseWrapper#getLocale()
      */
+    @Override
     public Locale getLocale()
     {
         return locale;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getOutputStream()
+     * @see jakarta.servlet.ServletResponseWrapper#getOutputStream()
      */
+    @Override
     public ServletOutputStream getOutputStream()
     {
         return outputStream;
@@ -145,44 +158,50 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
      * What HTTP status code should be returned?
      * @return The current http status code
      */
+    @Override
     public int getStatus()
     {
         return status;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#getWriter()
+     * @see jakarta.servlet.ServletResponseWrapper#getWriter()
      */
+    @Override
     public PrintWriter getWriter()
     {
         return pout;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#isCommitted()
+     * @see jakarta.servlet.ServletResponseWrapper#isCommitted()
      */
+    @Override
     public boolean isCommitted()
     {
         return false;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#reset()
+     * @see jakarta.servlet.ServletResponseWrapper#reset()
      */
+    @Override
     public void reset()
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#resetBuffer()
+     * @see jakarta.servlet.ServletResponseWrapper#resetBuffer()
      */
-    public void resetBuffer()
+    @Override
+   public void resetBuffer()
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#sendError(int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#sendError(int)
      */
+    @Override
     public void sendError(int newStatus)
     {
         if (committed)
@@ -197,8 +216,9 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#sendError(int, java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#sendError(int, java.lang.String)
      */
+    @Override
     public void sendError(int newStatus, String newErrorMessage)
     {
         if (committed)
@@ -214,24 +234,43 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#sendRedirect(java.lang.String)
      */
-    public void sendRedirect(String location)
+    @Override
+    public void sendRedirect(String location) throws IOException
     {
         if (committed)
         {
             throw new IllegalStateException("Cannot send redirect - response is already committed");
         }
 
-        log.warn("Ignoring call to sendRedirect(" + location + ')');
+        log.warn("Ignoring call to sendRedirect('" + location + "')'");
 
         redirectedUrl = location;
         committed = true;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setBufferSize(int)
+     * @see jakarta.servlet.http.HttpServletResponse#sendRedirect(java.lang.String, int, boolean)
      */
+    @Override
+    public void sendRedirect(String location, int statusCode, boolean clearBuffer) throws IOException
+    {
+        if (committed)
+        {
+            throw new IllegalStateException("Cannot send redirect - response is already committed");
+        }
+
+        log.warn("Ignoring call to sendRedirect('" + location + "', " + statusCode + ", " + clearBuffer + ')');
+
+        redirectedUrl = location;
+        committed = true;
+    }
+
+    /* (non-Javadoc)
+     * @see jakarta.servlet.ServletResponseWrapper#setBufferSize(int)
+     */
+    @Override
     public void setBufferSize(int bufferSize)
     {
         this.bufferSize = bufferSize;
@@ -239,16 +278,18 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
 
     /**
      * @param characterEncoding The new encoding to use for response strings
-     * @see javax.servlet.ServletResponseWrapper#getCharacterEncoding()
+     * @see jakarta.servlet.ServletResponseWrapper#getCharacterEncoding()
      */
+    @Override
     public void setCharacterEncoding(String characterEncoding)
     {
         this.characterEncoding = characterEncoding;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setContentLength(int)
+     * @see jakarta.servlet.ServletResponseWrapper#setContentLength(int)
      */
+    @Override
     public void setContentLength(int i)
     {
         // The content length of the original document is not likely to be the
@@ -256,45 +297,60 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setContentType(java.lang.String)
+     * @see jakarta.servlet.ServletResponse#setContentLengthLong(long)
      */
+    @Override
+    public void setContentLengthLong(long arg0)
+    {
+        // see this#setContentLength(int)
+    }
+
+    /* (non-Javadoc)
+     * @see jakarta.servlet.ServletResponseWrapper#setContentType(java.lang.String)
+     */
+    @Override
     public void setContentType(String contentType)
     {
         this.contentType = contentType;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setDateHeader(java.lang.String, long)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setDateHeader(java.lang.String, long)
      */
+    @Override
     public void setDateHeader(String name, long value)
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setHeader(java.lang.String, java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setHeader(java.lang.String, java.lang.String)
      */
+    @Override
     public void setHeader(String name, String value)
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setIntHeader(java.lang.String, int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setIntHeader(java.lang.String, int)
      */
+    @Override
     public void setIntHeader(String name, int value)
     {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.ServletResponseWrapper#setLocale(java.util.Locale)
+     * @see jakarta.servlet.ServletResponseWrapper#setLocale(java.util.Locale)
      */
+    @Override
     public void setLocale(Locale locale)
     {
         this.locale = locale;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponseWrapper#setStatus(int)
+     * @see jakarta.servlet.http.HttpServletResponseWrapper#setStatus(int)
      */
+    @Override
     public void setStatus(int status)
     {
         this.status = status;
@@ -302,68 +358,60 @@ public final class SwallowingHttpServletResponse implements HttpServletResponse
     }
 
     /**
-     * @see javax.servlet.http.HttpServletResponse#setStatus(int, java.lang.String)
-     * @deprecated
+     * !!! Doesn't check if the given paramString is already URL-encoded. !!!<br>
+     *
+     * @see jakarta.servlet.http.HttpServletResponse#encodeURL(java.lang.String)
      */
-    @Deprecated
-    public void setStatus(int newStatus, String newErrorMessage)
-    {
-        status = newStatus;
-        errorMessage = newErrorMessage;
-        log.warn("Ignoring call to setStatus(" + newStatus + ", " + newErrorMessage + ')');
-    }
-
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponse#encodeURL(java.lang.String)
-     */
+    @Override
     public String encodeURL(String paramString)
     {
-        return null;
+        try
+        {
+            return URLEncoder.encode(
+                paramString,
+                this.characterEncoding != null
+                    ? this.characterEncoding
+                    : "UTF-8");
+        }
+        catch (UnsupportedEncodingException ex)
+        {
+            throw new RuntimeException(ex);
+        }
     }
 
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponse#encodeRedirectURL(java.lang.String)
+    /**
+     * !!! Doesn't check if the given paramString is already URL-encoded. !!!
+     *
+     * @see jakarta.servlet.http.HttpServletResponse#encodeRedirectURL(java.lang.String)
      */
+    @Override
     public String encodeRedirectURL(String paramString)
     {
-        return null;
+        return encodeURL(paramString);
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponse#encodeUrl(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponse#getHeader(java.lang.String)
      */
-    public String encodeUrl(String paramString)
-    {
-        return null;
-    }
-
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponse#encodeRedirectUrl(java.lang.String)
-     */
-    public String encodeRedirectUrl(String paramString)
-    {
-        return null;
-    }
-
-    /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponse#getHeader(java.lang.String)
-     */
+    @Override
     public String getHeader(String paramString)
     {
         return null;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponse#getHeaders(java.lang.String)
+     * @see jakarta.servlet.http.HttpServletResponse#getHeaders(java.lang.String)
      */
+    @Override
     public Collection<String> getHeaders(String paramString)
     {
         return null;
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServletResponse#getHeaderNames()
+     * @see jakarta.servlet.http.HttpServletResponse#getHeaderNames()
      */
+    @Override
     public Collection<String> getHeaderNames()
     {
         return null;

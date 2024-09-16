@@ -3,7 +3,8 @@ package org.directwebremoting.util;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.servlet.ServletOutputStream;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
 
 /**
  * Delegating implementation of ServletOutputStream.
@@ -58,4 +59,22 @@ public class DelegatingServletOutputStream extends ServletOutputStream
     }
 
     private final OutputStream proxy;
+
+    /* (non-Javadoc)
+     * @see jakarta.servlet.ServletOutputStream#isReady()
+     */
+    @Override
+    public boolean isReady()
+    {
+        return false;
+    }
+
+    /* (non-Javadoc)
+     * @see jakarta.servlet.ServletOutputStream#setWriteListener(jakarta.servlet.WriteListener)
+     */
+    @Override
+    public void setWriteListener(WriteListener arg0)
+    {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 }

@@ -45,10 +45,11 @@
 	</taskdef>
 
 	<!-- The modules that we are working with -->
+	<!-- Modules excluded: core/legacy, serverside/struts, serverside/webwork, -->
 	<property name="modules" value="
-		core/api, core/impl, core/legacy,
+		core/api, core/impl, 
 		protocol/dwrp, protocol/json,
-		serverside/spring, serverside/guice, serverside/struts, serverside/hibernate, serverside/webwork, serverside/various,
+		serverside/spring, serverside/guice, serverside/hibernate, serverside/various,
 		ui/dwr
 		" />
 

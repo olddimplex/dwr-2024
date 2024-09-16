@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.google.inject.Key;
 import com.google.inject.Provider;
-import com.google.inject.util.ToStringBuilder;
 
 import static java.util.Collections.*;
 
@@ -86,10 +87,10 @@ public abstract class AbstractContextScope<C, R> implements ContextScope<C>, Con
             public String toString()
             {
                 return new ToStringBuilder(this.getClass())
-                    .add("scopeName", scopeName)
-                    .add("type", type)
-                    .add("key", key)
-                    .add("creator", creator)
+                    .append("scopeName", scopeName)
+                    .append("type", type)
+                    .append("key", key)
+                    .append("creator", creator)
                     .toString();
             }
         };

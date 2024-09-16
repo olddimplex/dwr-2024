@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.directwebremoting.ServerContextFactory;
-import org.directwebremoting.WebContextFactory;
 import org.directwebremoting.extend.AbstractCreator;
 import org.directwebremoting.extend.Creator;
 import org.directwebremoting.util.LocalUtil;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+
+import jakarta.servlet.ServletContext;
 
 /**
  * A creator that relies on a spring bean factory.
@@ -153,16 +150,17 @@ public class SpringCreator extends AbstractCreator implements Creator
 
         ServletContext srvCtx = ServerContextFactory.get().getServletContext();
 
-        HttpServletRequest request = null;
-        try
-        {
-            request = WebContextFactory.get().getHttpServletRequest();
-        }
-        catch (Exception ex)
-        {
-            // Probably on boot time
-        }
-        return request != null ? RequestContextUtils.getWebApplicationContext(request, srvCtx) : WebApplicationContextUtils.getWebApplicationContext(srvCtx);
+//        HttpServletRequest request = null;
+//        try
+//        {
+//            request = WebContextFactory.get().getHttpServletRequest();
+//        }
+//        catch (Exception ex)
+//        {
+//            // Probably on boot time
+//        }
+//        return request != null ? RequestContextUtils.getWebApplicationContext(request, srvCtx) : WebApplicationContextUtils.getWebApplicationContext(srvCtx);
+        return WebApplicationContextUtils.getWebApplicationContext(srvCtx);
     }
 
     /**

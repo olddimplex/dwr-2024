@@ -12,9 +12,10 @@ import org.springframework.beans.factory.support.ManagedMap;
 import org.springframework.beans.factory.xml.BeanDefinitionParser;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.util.Assert;
 import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
+
+import static org.junit.Assert.*;
 
 /**
  * Parses a <code>&lt;dwr:configuration&gt;</code> tag and all its children.
@@ -37,7 +38,7 @@ public final class ConfigurationParser implements BeanDefinitionParser
      * @param handler a non null instance
      */
     public ConfigurationParser(NamespaceHandlerSupport handler) {
-        Assert.notNull(handler);
+        assertNotNull(handler);
         this.handler = handler;
     }
 
