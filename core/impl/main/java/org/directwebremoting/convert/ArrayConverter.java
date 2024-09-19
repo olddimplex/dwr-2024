@@ -57,22 +57,24 @@ public class ArrayConverter implements Converter
         // getMembers() is there so BaseCallWrapper can support varargs by
         // creating a temporary InboundVariable so it can pass the remaining
         // parameters to be packaged into an array by the ArrayConverter
-        InboundVariable[] members = data.getMembers();
-        if (members != null)
-        {
-            Object array = Array.newInstance(componentType, members.length);
-            data.getContext().addConverted(data, paramType, array);
+//        InboundVariable[] members = data.getMembers();
+//        if (members != null)
+//        {
+//            Object array = Array.newInstance(componentType, members.length);
+//            data.getContext().addConverted(data, paramType, array);
+//
+//            for (int i = 0; i < members.length; i++)
+//            {
+//                Object output = converterManager.convertInbound(componentType, members[i], data.getContext().getCurrentProperty());
+//                Array.set(array, i, output);
+//            }
+//
+//            return array;
+//        }
 
-            for (int i = 0; i < members.length; i++)
-            {
-                Object output = converterManager.convertInbound(componentType, members[i], data.getContext().getCurrentProperty());
-                Array.set(array, i, output);
-            }
-
-            return array;
-        }
-
-        String value = data.getValue();
+        String value = "varargs".equals(data.getType()) && data.getMembers() != null && data.getMembers().length == 1
+            ? data.getMembers()[0].getValue()
+            : data.getValue();
         if (value.startsWith(ProtocolConstants.INBOUND_ARRAY_START))
         {
             value = value.substring(1);
