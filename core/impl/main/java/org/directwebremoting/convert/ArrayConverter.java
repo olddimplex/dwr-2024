@@ -72,9 +72,16 @@ public class ArrayConverter implements Converter
 //            return array;
 //        }
 
-        String value = "varargs".equals(data.getType()) && data.getMembers() != null && data.getMembers().length == 1
+        //TODO the vararg arrays should come here properly formatted, so the ugly patch below is not needed
+        boolean isSingletonArray =
+            "varargs".equals(data.getType()) && data.getMembers() != null && data.getMembers().length == 1;
+        String value = isSingletonArray
             ? data.getMembers()[0].getValue()
             : data.getValue();
+        if(isSingletonArray && !(value.startsWith(ProtocolConstants.INBOUND_ARRAY_START) && value.endsWith(ProtocolConstants.INBOUND_ARRAY_END))) {
+            value = ProtocolConstants.INBOUND_ARRAY_START + value + ProtocolConstants.INBOUND_ARRAY_END;
+        }
+
         if (value.startsWith(ProtocolConstants.INBOUND_ARRAY_START))
         {
             value = value.substring(1);
